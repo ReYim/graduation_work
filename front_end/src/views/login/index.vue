@@ -137,13 +137,6 @@ export default {
             .then(() => {
               this.$router.push({ path: this.redirect || "/" });
               this.loading = false;
-              this.$notify({
-                title: "警告",
-                message: "初次登录请修改密码，若已修改请忽略",
-                type: "warning",
-                offset: 100,
-                duration: 2000
-              });
             })
             .catch(() => {
               this.loading = false;
