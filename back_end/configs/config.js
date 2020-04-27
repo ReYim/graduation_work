@@ -6,7 +6,7 @@ var server_config = {
 
 // mysql 配置
 var mysql_config = {
-    DB_HOST: 'kujijiku.com:9528',
+    DB_HOST: 'kujijiku.com',
     DB_NAME: 'reyim',
     DB_USER: 'reyim',
     DB_PASSWORD: '123456',
