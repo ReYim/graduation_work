@@ -3,8 +3,8 @@
     <div class="filter-container">
       <el-input
         v-model="keyword"
-        placeholder="工号"
-        style="width: 200px;"
+        placeholder="请输入姓名或工号搜索"
+        style="width: 300px;"
         class="filter-item"
         clearable
         @clear="clearSearch"
@@ -19,7 +19,6 @@
         @click="handleCreate"
       >添加</el-button>
       <el-button
-        :loading="downloadLoading"
         class="filter-item"
         type="primary"
         icon="el-icon-download"
@@ -28,7 +27,6 @@
     </div>
 
     <el-table
-      v-loading="listLoading"
       :data="teacher_list | pagination(currentPage, pagesize)"
       border
       fit
@@ -58,8 +56,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">删除</el-button>
+          <el-button type="primary" icon="el-icon-setting" size="mini" @click="handleUpdate(row)">编辑</el-button>
+          <el-button size="mini" icon="el-icon-delete" @click="handleDelete(row,$index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -78,11 +76,10 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form
         ref="dataForm"
-        :rules="rules"
         :model="temp"
-        label-position="left"
-        label-width="70px"
-        style="width: 400px; margin-left:50px;"
+        label-position="right"
+        label-width="100px"
+        style="width: 450px; margin-left:20px;"
       >
         <el-form-item label="姓名" prop="name">
           <el-input v-model="temp.user_name" />
@@ -94,7 +91,7 @@
           <el-input v-model="temp.teacher_info.management_faculty" />
         </el-form-item>
         <el-form-item label="权限" prop="permission">
-          <el-select v-model="temp.user_role" class="filter-item" placeholder="权限">
+          <el-select style="width:350px" v-model="temp.user_role" class="filter-item" placeholder="权限">
             <el-option
               v-for="item in calendarTypeOptions"
               :key="item.key"
@@ -124,7 +121,6 @@ export default {
   name: "ComplexTable",
   data() {
     return {
-      list: null,
       keyword: "",
       currentPage: 1,
       pagesize: 10,
@@ -132,7 +128,6 @@ export default {
       id: "",
       teacher_list: [],
       copy_teacher_list: [],
-      listLoading: false,
       calendarTypeOptions,
       temp: {
         user_name: "",
@@ -145,16 +140,6 @@ export default {
         update: "编辑",
         create: "添加"
       },
-      dialogPvVisible: false,
-      pvData: [],
-      rules: {
-        user_name: [{ required: true, message: "不能为空", trigger: "blur" }],
-        teacher_info: [
-          { required: true, message: "不能为空", trigger: "blur" }
-        ],
-        user_role: [{ required: true, message: "不能为空", trigger: "blur" }]
-      },
-      downloadLoading: false
     };
   },
   computed: {
@@ -165,13 +150,13 @@ export default {
   },
   methods: {
     getList() {
-      this.listLoading = false;
       axios
-        .get("http://localhost:8080/teacher/get_teacher")
+        .get("http://kujijiku.com:9528/teacher/get_teacher")
         .then(response => {
           // 请求成功的处理
           if (response.data.code === 200) {
             this.teacher_list = response.data.data;
+            this.total = this.teacher_list.length;
             this.copy_teacher_list = JSON.parse(
               JSON.stringify(this.teacher_list)
             ); // 先转为JSON字符串，再解析成javascript值
@@ -186,30 +171,6 @@ export default {
           // 请求失败的处理
         });
     },
-    handleFilter() {
-      if (this.keyword) {
-        this.teacher_list = this.copy_teacher_list.filter(item => {
-          return (
-            JSON.stringify(item.teacher_info.teacher_id).indexOf(this.keyword) >
-            -1
-          );
-        });
-        this.total = this.teacher_list.length;
-      } else {
-        this.teacher_list = this.copy_teacher_list;
-        this.total = this.teacher_list.length;
-      }
-    },
-    clearSearch() {
-      this.handleFilter();
-    },
-    resetTemp() {
-      this.temp = {
-        teacher_name: "",
-        teacher_id: "",
-        teacher_info: {}
-      };
-    },
     handleCreate() {
       this.resetTemp();
       this.dialogStatus = "create";
@@ -221,10 +182,8 @@ export default {
     createData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          console.log(valid);
-          console.log("添加", this.temp);
           axios
-            .post("http://localhost:8080/teacher/add_teacher", {
+            .post("http://kujijiku.com:9528/teacher/add_teacher", {
               // 放在 body 中的请求参数
               teacher_name: this.temp.user_name,
               teacher_id: this.temp.teacher_info.teacher_id,
@@ -233,7 +192,6 @@ export default {
             })
             .then(response => {
               // 请求成功的处理
-              console.log(response.data);
               if (response.data.code === 200) {
                 this.dialogFormVisible = false;
                 this.$message({ type: "success", message: "添加老师信息成功" });
@@ -249,7 +207,6 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row); // copy obj
-      console.log(this.temp);
 
       this.dialogStatus = "update";
       this.dialogFormVisible = true;
@@ -260,11 +217,11 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          console.log(valid);
-          console.log("编辑", this.temp);
+          // console.log(valid);
+          // console.log("编辑", this.temp);
           axios
             .get(
-              "http://localhost:8080/teacher/update_teacher?user_name=" +
+              "http://kujijiku.com:9528/teacher/update_teacher?user_name=" +
               this.temp.user_name + // 名字不能改，后台以名字查询进行update
                 "&management_faculty=" +
                 this.temp.teacher_info.management_faculty +
@@ -273,7 +230,7 @@ export default {
             )
             .then(response => {
               // 请求成功的处理
-              console.log(response.data);
+              // console.log(response.data);
               if (response.data.code === 200) {
                 this.dialogFormVisible = false;
                 this.$message({ type: "success", message: "修改老师信息成功" });
@@ -291,7 +248,7 @@ export default {
     handleDelete(row, index) {
       axios
         .get(
-          "http://localhost:8080/teacher/del_teacher?user_name=" + row.user_name
+          "http://kujijiku.com:9528/teacher/del_teacher?user_name=" + row.user_name
         )
         .then(response => {
           // 请求成功的处理
@@ -310,34 +267,65 @@ export default {
         });
     },
     handleDownload() {
-      var values = ['姓名','工号','负责学院'];
+      var values = ["姓名", "工号", "负责学院"];
       var datas = this.teacher_list;
-      let str = '';
-      for(let i = 0; i < values.length; i++) {
-        str += values[i] + ',';
+      let str = "";
+      for (let i = 0; i < values.length; i++) {
+        str += values[i] + ",";
       }
-      str += '\n';
-      for(let j = 0; j < datas.length; j++) {
-      str += datas[j].user_name + ',' + datas[j].teacher_info.teacher_id + ',' + datas[j].teacher_info.management_faculty + '\n';
+      str += "\n";
+      for (let j = 0; j < datas.length; j++) {
+        str +=
+          datas[j].user_name +
+          "," +
+          datas[j].teacher_info.teacher_id +
+          "," +
+          datas[j].teacher_info.management_faculty +
+          "\n";
       }
-        // encodeURIComponent解决中文乱码
-        let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str)
-        // 通过创建a标签实现
-        let link = document.createElement('a')
-        link.href = uri
-        // 对下载的文件命名
-        link.download = "分管老师列表" + ".xlsx";
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
+      // encodeURIComponent解决中文乱码
+      let uri = "data:text/csv;charset=utf-8,\ufeff" + encodeURIComponent(str);
+      // 通过创建a标签实现
+      let link = document.createElement("a");
+      link.href = uri;
+      // 对下载的文件命名
+      link.download = "分管老师列表" + ".xlsx";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     },
     handleSizeChange(val) {
       this.pagesize = val;
     },
     handleCurrentChange(val) {
       this.currentPage = val;
-    }
-  },
+    },
+    handleFilter() {
+      if (this.keyword) {
+        this.teacher_list = this.copy_teacher_list.filter(item => {
+          return (
+            JSON.stringify(item.teacher_info.teacher_id).indexOf(this.keyword) > -1 ||
+            JSON.stringify(item.user_name).indexOf(this.keyword) > -1
+          );
+        });
+        this.total = this.teacher_list.length;
+        this.currentPage = 1;
+      } else {
+        this.teacher_list = this.copy_teacher_list;
+        this.total = this.teacher_list.length;
+      }
+    },
+    clearSearch() {
+      this.handleFilter();
+    },
+    resetTemp() {
+      this.temp = {
+        teacher_name: "",
+        teacher_id: "",
+        teacher_info: {}
+      };
+    },     
+  }, 
   filters: {
     pagination(tableData, pageNum, pagesize) {
       let offset = (pageNum - 1) * pagesize; //当前页第一条的索引
@@ -350,7 +338,6 @@ export default {
   }
 };
 </script>
-
 <style>
 .el-table {
   margin-top: 30px;

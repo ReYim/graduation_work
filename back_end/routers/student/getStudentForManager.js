@@ -25,7 +25,7 @@ let get_student_for_manager = async function (request, response) {
             },
             include: [{
                 model: student_info.StudentInfo,
-                attributes: ['student_id', 'student_faculty', 'home_address', 'student_awards', 'charger_teacher_id'],
+                // attributes: ['student_id', 'student_faculty', 'home_address', 'student_awards', 'charger_teacher_id'],
             }],
             // raw: true
         })

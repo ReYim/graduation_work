@@ -8,8 +8,8 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     id: '',
-    avatar: 'https://ae01.alicdn.com/kf/Hf0ce51edbbb04a8185c7df0b0f2f804cU.jpg', // TO DO 用户头像，当学生上传头像时初始化
-    roles: ''
+    avatar: 'https://ae01.alicdn.com/kf/H0486ac29c4d846e7ba5977e3e12669baB.jpg', // TO DO 用户头像，当学生上传头像时初始化
+    roles: '',
   }
 }
 

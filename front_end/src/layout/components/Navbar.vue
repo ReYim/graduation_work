@@ -9,6 +9,9 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+      <div class="user-name" style="margin-right:200px">
+        <span>欢迎，<span style="font-weight:600">{{name}}</span> ！</span>
+      </div>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- <img src="http://chuantu.xyz/t6/715/1581698201x2890149538.jpg" class="user-avatar"> -->
@@ -19,15 +22,15 @@
           <router-link to="/">
             <el-dropdown-item>主页</el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
+          <a target="_blank" href="http://www1.szu.edu.cn/">
             <el-dropdown-item>内网</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>帮助</el-dropdown-item>
           </a>
           <el-dropdown-item @click.native="changePassword">
             <span style="display:block;">修改密码</span>
-          </el-dropdown-item>
+          </el-dropdown-item>          
+          <a target="_blank" href="https://reyim.github.io/">
+            <el-dropdown-item>联系作者</el-dropdown-item>
+          </a>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">登出</span>
           </el-dropdown-item>
@@ -85,7 +88,7 @@ export default {
     clickConfirm() {
       if (this.password1 === this.password2) {
         axios
-          .post("http://localhost:8080/user/reset_password", {
+          .post("http://kujijiku.com:9528/user/reset_password", {
             // 放在 body 中的请求参数
             user_name: this.name,
             password: this.password2
@@ -143,7 +146,14 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
-
+    .user-name {
+      position: absolute;
+      right: -100px;
+      span {
+        color: #5a5e66;
+        font-size: 14px;
+      }
+    }
     &:focus {
       outline: none;
     }

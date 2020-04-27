@@ -27,7 +27,7 @@ let get_student_info = async function (request, response) {
             include: [{
                 model: student_info.StudentInfo,
                 where: { user_name: student_name },
-                attributes: ['student_id', 'student_faculty', 'home_address', 'student_awards', 'charger_teacher_id'],
+                // attributes: ['student_id', 'student_faculty', 'home_address', 'student_awards', 'charger_teacher_id'],
             }],
             // raw: true
         })

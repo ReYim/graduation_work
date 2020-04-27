@@ -8,7 +8,7 @@ const TeacheInfo = ConnectMySQL.define('teacher_info', {
         allowNull: false,
     },
     teacher_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
     },
     management_faculty: {

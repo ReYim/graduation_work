@@ -45,7 +45,7 @@ router.beforeEach(async (to, from, next) => {
 
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
-          next({ ...to, replace: true })
+          next()
           // await store.dispatch('user/getInfo').then(response => {            
           //   const roles = response.user_role
           //   console.log({roles});

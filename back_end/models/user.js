@@ -4,17 +4,22 @@ const ConnectMySQL = require('../dataBase/mysql')
 const UserModel = ConnectMySQL.define('user', {
 	user_name: {
 		type: Sequelize.STRING,
-		unique: true,
+		unique: true, // 不能重复
 		allowNull: false,
 	},
 	user_password: {
-		type: Sequelize.STRING(10),
+		type: Sequelize.STRING(12),
 		allowNull: false,
 	},
 	user_status: {
 		type: Sequelize.INTEGER,
 		defaultValue: 1,  // 1可用 0限制使用
 		allowNull: false
+	},
+	count_visitors: {
+		type: Sequelize.INTEGER,
+		defaultValue: 1000,  // 1可用 0限制使用
+		allowNull: false		
 	},
 	user_role: {
 		type: Sequelize.STRING,

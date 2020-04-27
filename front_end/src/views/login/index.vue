@@ -85,8 +85,8 @@ export default {
     };
     return {
       loginForm: {
-        username: "reyimu",
-        password: "123456"
+        username: "尼加提",
+        password: "456789"
       },
       loginRules: {
         username: [{ required: true, trigger: "blur" }],
@@ -121,7 +121,14 @@ export default {
     handleLogin() {
       console.log(this.loginForm.username);
       console.log(this.loginForm.password);
-
+      axios.get("http://kujijiku.com:9528/user/count_visitors").then(response => {
+        if(response.data.code === 200) {
+          console.log(response.data);
+        } else {
+          console.log("访问量统计失败!");
+          
+        }       
+      })
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;

@@ -10,6 +10,7 @@ loginRouter.post('/login', user_login.login)
 loginRouter.get('/info', user_login.userInfo)
 loginRouter.get('/logout', user_login.logout)
 loginRouter.post('/reset_password', user_login.reset_password)
+loginRouter.get('/count_visitors', user_login.count_visitors)
 
 module.exports = {
 	loginRouter

@@ -1,9 +1,13 @@
 const redis = require('redis')
 const jwt = require('jsonwebtoken')
 const user_module = require('../models/user')
+const student_info = require('../models/student')
+const visitor_count = require('../models/counts')
 const config = require('../configs/config')
 const utils_common = require('../utils/common')
 
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 /**
  * 登陆
@@ -236,12 +240,201 @@ let reset_password = async function (request, response) {
                 code: 200,
                 message: '修改密码成功！'
             })
-        }).catch( err => {
-            utils_common.sendMessage(response, 1017, '修改密码失败！' + err)
+        }).catch( error => {
+            utils_common.sendMessage(response, 1017, '修改密码失败！' + error)
         })
 
     } catch (error) {
-        utils_common.sendMessage(response, 1015, '修改密码接口捕获错误' + err)
+        utils_common.sendMessage(response, 1015, '修改密码接口捕获错误' + error)
+        return
+    }
+}
+
+let count_visitors = async function (request, response) {
+    try {
+        if (!request) {
+            utils_common.sendMessage(response, 1016, "参数传入有误")
+            return
+        }
+        let visitors = await visitor_count.VisitorCount.findOne({
+            // attributes: ['count_visitors'],
+            // where: {},
+        })
+
+        let teacher_count = await user_module.UserModel.findAndCountAll({
+            attributes: ['user_role'],
+            where: {
+                user_role: 'teacher'
+            },
+        })  
+        
+        let student_count = await user_module.UserModel.findAndCountAll({
+            attributes: ['user_role'],
+            where: {
+                user_role: 'student'
+            },
+        }) 
+
+        let male_count = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['gender'],
+            where: {
+                gender: '男'
+            },
+        }) 
+        
+        let female_count = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['gender'],
+            where: {
+                gender: '女'
+            },
+        })
+
+        let preparatory_grade = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['student_id'],
+            where: {
+                student_id: {
+                    // 模糊查询
+                    [Op.like]: '%2020%'
+                }
+            },
+        })
+
+        let first_grade = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['student_id'],
+            where: {
+                student_id: {
+                    // 模糊查询
+                    [Op.like]: '%2016%'
+                }
+            },
+        })  
+        
+        let second_grade = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['student_id'],
+            where: {
+                student_id: {
+                    // 模糊查询
+                    [Op.like]: '%2017%'
+                }
+            },
+        }) 
+        
+        let third_grade = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['student_id'],
+            where: {
+                student_id: {
+                    // 模糊查询
+                    [Op.like]: '%2018%'
+                }
+            },
+        }) 
+        
+        let fourth_grade = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['student_id'],
+            where: {
+                student_id: {
+                    // 模糊查询
+                    [Op.like]: '%2019%'
+                }
+            },
+        })
+        
+        let computer_major_count = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['faculty'],
+            where: {
+                faculty: {
+                    // 模糊查询
+                    [Op.like]: '%计算机与软件%'
+                }
+            },
+        })  
+        
+        let communication_major_count = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['faculty'],
+            where: {
+                faculty: {
+                    // 模糊查询
+                    [Op.like]: '%传播%'
+                }
+            },
+        }) 
+        
+        let law_major_count = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['faculty'],
+            where: {
+                faculty: {
+                    // 模糊查询
+                    [Op.like]: '%法学院%'
+                }
+            },
+        }) 
+        
+        let management_major_count = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['faculty'],
+            where: {
+                faculty: {
+                    // 模糊查询
+                    [Op.like]: '%管理学院%'
+                }
+            },
+        })     
+        
+        let economics_major_count = await student_info.StudentInfo.findAndCountAll({
+            attributes: ['faculty'],
+            where: {
+                faculty: {
+                    // 模糊查询
+                    [Op.like]: '%经济学院%'
+                }
+            },
+        })        
+
+        console.log(visitors.dataValues.count_visitors);
+        console.log("辅导员人数：",teacher_count.count);
+        console.log("学生人数：",student_count.count);
+        console.log("男生人数：",male_count.count);
+        console.log("女生人数：",female_count.count);
+        console.log("预科生人数：",preparatory_grade.count);
+        console.log("大一人数：",first_grade.count);
+        console.log("大二人数：",second_grade.count);
+        console.log("大三人数：",third_grade.count);
+        console.log("大四人数：",fourth_grade.count);
+        console.log("计算与软件学院人数：",computer_major_count.count);
+        console.log("传播学院人数：",communication_major_count.count);
+        console.log("法学院人数：",law_major_count.count);
+        console.log("管理学院人数：",management_major_count.count);
+        console.log("经济学院人数：",economics_major_count.count);
+
+        let update_info = await visitor_count.VisitorCount.update(
+            {
+                count_visitors: visitors.dataValues.count_visitors + 1,
+            },
+            {
+                where: {}
+            })
+            
+            response.json({
+                code: 200,
+                data: {
+                   visitor_count: visitors.dataValues.count_visitors,
+                   teacher_count: teacher_count.count,
+                   student_count: student_count.count,
+                   preparatory_grade: preparatory_grade.count,
+                   first_grade: first_grade.count,
+                   second_grade: second_grade.count,
+                   third_grade: third_grade.count,
+                   fourth_grade: fourth_grade.count,
+                   computer_major_count: computer_major_count.count,
+                   communication_major_count: communication_major_count.count,
+                   law_major_count: law_major_count.count,
+                   management_major_count: management_major_count.count,
+                   economics_major_count: economics_major_count.count,
+                },
+                message: '访问量计数成功！'
+            })
+
+    } catch (error) {
+        utils_common.sendMessage(response, 1015, '访问量计数接口捕获错误' + error)
         return
     }
 }
@@ -250,5 +443,6 @@ module.exports = {
     login,
     logout,
     userInfo,
-    reset_password
+    reset_password,
+    count_visitors
 }

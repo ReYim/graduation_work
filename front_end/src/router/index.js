@@ -44,7 +44,7 @@ export const constantRoutes = [
   },
 
   {
-    path: '/',
+    path: '*',
     component: Layout,
     redirect: '/dashboard',
     children: [{
@@ -64,58 +64,46 @@ export const asyncRoutes = [
     path: '/user_list',
     component: Layout,
     name: 'AllUser',
-    meta: { title: '用户管理', icon: 'example', roles: ['manager'] }, //页面需要的权限
+    meta: { title: '用户管理', icon: 'peoples', roles: ['manager'] }, //页面需要的权限
     children: [
       {
         path: 'teacher_list',
         name: 'TeacherList',
         component: () => import('@/views/TeacherList/index'),
-        meta: { title: '管理老师', icon: 'tree' }
+        meta: { title: '管理老师', icon: 'user' }
       },
       {
         path: 'student_list',
         component: () => import('@/views/StudentList/index'),
         name: 'StudentList',
-        meta: { title: '管理学生', icon: 'table' }  //页面需要的权限
+        meta: { title: '管理学生', icon: 'people' }  //页面需要的权限
       },
     ]
   },
   {
     path: '/student_list',
     component: Layout,
-    meta: { title: '学生管理', icon: 'example', roles: ['teacher'] }, //页面需要的权限
+    meta: { title: '学生管理', icon: 'peoples', roles: ['teacher'] }, //页面需要的权限
     children: [
       {
         path: 'student_info',
         name: 'StudentInfo',
         component: () => import('@/views/StudentListForTeacher/index'),
-        meta: { title: '学生列表', icon: 'tree' }
-      },
-      {
-        path: 'student_search',
-        name: 'StudentSearch',
-        component: () => import('@/views/StudentListForTeacher/index'),
-        meta: { title: '学生查询', icon: 'tree' }
-      },      
+        meta: { title: '学生列表', icon: 'peoples' }
+      },     
     ]
   },
   {
     path: '/student_submit_info',
     component: Layout,
-    meta: { title: '学生信息', icon: 'example', roles: ['student'] }, //页面需要的权限
+    meta: { title: '学生信息', icon: 'people', roles: ['student'] }, //页面需要的权限
     children: [
       {
         path: 'info_list',
         name: 'InfoList',
         component: () => import('@/views/StudentForm/index'),
-        meta: { title: '填写信息', icon: 'tree' }
-      },
-      {
-        path: 'info_list1',
-        name: 'InfoList1',
-        component: () => import('@/views/StudentForm/index'),
-        meta: { title: '填写信息', icon: 'tree' }
-      }      
+        meta: { title: '填写信息', icon: 'edit' }
+      },    
     ]
   },  
   {
@@ -123,13 +111,23 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'https://github.com/PanJiaChen/vue-element-admin',
-        meta: { title: '通用跳转', icon: 'link', roles: ['manager','teacher','student'] }
+        path: 'http://www1.szu.edu.cn/',
+        meta: { title: '深大内部网', icon: 'link', roles: ['manager','teacher','student'] }
       }
     ]
   },
+  {
+    path: 'author-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://reyim.github.io/',
+        meta: { title: '联系作者', icon: 'wechat', roles: ['manager','teacher','student'] }
+      }
+    ]
+  },  
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
