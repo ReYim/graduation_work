@@ -15,7 +15,7 @@ var mysql_config = {
 
 // redis 配置
 var redis_config = {
-    HOST: 'kujijiku.com:9528',
+    HOST: 'kujijiku.com',
     PORT: 6379,
     USER: "",
     PASSWORD: "",
