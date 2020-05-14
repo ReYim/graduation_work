@@ -122,7 +122,7 @@ export default {
     handleLogin() {
       console.log(this.loginForm.username);
       console.log(this.loginForm.password);
-      axios.get("http://123.56.88.197/user/count_visitors").then(response => {
+      axios.get("http://123.56.88.197:8081/user/count_visitors").then(response => {
         if(response.data.code === 200) {
           console.log(response.data);
         } else {

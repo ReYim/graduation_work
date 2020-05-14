@@ -408,7 +408,7 @@ export default {
   methods: {
     getList() {
       axios
-        .get("http://123.56.88.197/student/manager_get_student")
+        .get("http://123.56.88.197:8081/student/manager_get_student")
         .then(response => {
           // 请求成功的处理
           if (response.data.code === 200) {
@@ -441,7 +441,7 @@ export default {
           console.log(valid);
           console.log("添加", this.temp);
           axios
-            .post("http://123.56.88.197/student/add_student", {
+            .post("http://123.56.88.197:8081/student/add_student", {
               // 放在 body 中的请求参数
               student_name: this.temp.student_name,
               student_id: this.temp.student_info.student_id,
@@ -481,7 +481,7 @@ export default {
     handleDelete(row, index) {
       axios
         .get(
-          "http://123.56.88.197/student/del_student?student_name=" +
+          "http://123.56.88.197:8081/student/del_student?student_name=" +
             row.user_name
         )
         .then(response => {

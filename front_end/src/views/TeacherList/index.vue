@@ -151,7 +151,7 @@ export default {
   methods: {
     getList() {
       axios
-        .get("http://123.56.88.197/teacher/get_teacher")
+        .get("http://123.56.88.197:8081/teacher/get_teacher")
         .then(response => {
           // 请求成功的处理
           if (response.data.code === 200) {
@@ -183,7 +183,7 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           axios
-            .post("http://123.56.88.197/teacher/add_teacher", {
+            .post("http://123.56.88.197:8081/teacher/add_teacher", {
               // 放在 body 中的请求参数
               teacher_name: this.temp.user_name,
               teacher_id: this.temp.teacher_info.teacher_id,
@@ -221,7 +221,7 @@ export default {
           // console.log("编辑", this.temp);
           axios
             .get(
-              "http://123.56.88.197/teacher/update_teacher?user_name=" +
+              "http://123.56.88.197:8081/teacher/update_teacher?user_name=" +
               this.temp.user_name + // 名字不能改，后台以名字查询进行update
                 "&management_faculty=" +
                 this.temp.teacher_info.management_faculty +
@@ -248,7 +248,7 @@ export default {
     handleDelete(row, index) {
       axios
         .get(
-          "http://123.56.88.197/teacher/del_teacher?user_name=" + row.user_name
+          "http://123.56.88.197:8081/teacher/del_teacher?user_name=" + row.user_name
         )
         .then(response => {
           // 请求成功的处理
