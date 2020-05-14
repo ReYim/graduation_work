@@ -112,7 +112,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'http://www1.szu.edu.cn/',
-        meta: { title: '深大内部网', icon: 'link', roles: ['manager','teacher','student'] }
+        meta: { title: '深大内部网', icon: 'link' }
       }
     ]
   },
@@ -122,7 +122,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'https://reyim.github.io/',
-        meta: { title: '联系作者', icon: 'wechat', roles: ['manager','teacher','student'] }
+        meta: { title: '联系作者', icon: 'wechat' }
       }
     ]
   },  

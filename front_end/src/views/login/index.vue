@@ -55,7 +55,8 @@
       >登录</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">用户名: reyimu</span>
+        <span style="margin-right:20px;">游客登陆</span>
+        <span style="margin-right:20px;">用户名: visitor</span>
         <span>password: 123456</span>
       </div>
     </el-form>
@@ -85,8 +86,8 @@ export default {
     };
     return {
       loginForm: {
-        username: "尼加提",
-        password: "456789"
+        username: "visitor",
+        password: "123456"
       },
       loginRules: {
         username: [{ required: true, trigger: "blur" }],
