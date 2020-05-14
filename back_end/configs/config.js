@@ -1,6 +1,6 @@
 // node 服务器配置
 var server_config = {
-    HOST: '0.0.0.0',
+    HOST: '123.56.88.197',
     PORT: 8081
 }
 
