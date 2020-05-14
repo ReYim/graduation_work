@@ -117,7 +117,7 @@ export default {
     }
   },
   mounted() {
-    axios.get("https://kujijiku.com/user/count_visitors").then(response => {
+    axios.get("http://123.56.88.197/user/count_visitors").then(response => {
       if (response.data.code === 200) {
         this.visit_count = response.data.data.visitor_count;
         this.teacher_count = response.data.data.teacher_count;

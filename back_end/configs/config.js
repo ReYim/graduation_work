@@ -1,7 +1,7 @@
 // node 服务器配置
 var server_config = {
     HOST: '0.0.0.0',
-    PORT: 443
+    PORT: 80
 }
 
 // mysql 配置
@@ -15,7 +15,7 @@ var mysql_config = {
 
 // redis 配置
 var redis_config = {
-    HOST: 'kujijiku.com',
+    HOST: '123.56.88.197',
     PORT: 6379,
     USER: "",
     PASSWORD: "",

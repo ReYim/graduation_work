@@ -410,7 +410,7 @@ export default {
       this.listLoading = false;
       axios
         .get(
-          "https://kujijiku.com/student/get_student?teacher_id=" +
+          "http://123.56.88.197/student/get_student?teacher_id=" +
             this.create_teacher_name
         )
         .then(response => {
@@ -452,7 +452,7 @@ export default {
           console.log(valid);
           console.log("添加", this.temp);
           axios
-            .post("https://kujijiku.com/student/add_student", {
+            .post("http://123.56.88.197/student/add_student", {
               // 放在 body 中的请求参数
               student_name: this.temp.student_name,
               student_id: this.temp.student_info.student_id,
@@ -498,7 +498,7 @@ export default {
           console.log("编辑", this.temp);
           axios
             .get(
-              "https://kujijiku.com/teacher/update_teacher?user_name=" +
+              "http://123.56.88.197/teacher/update_teacher?user_name=" +
               this.temp.user_name + // 名字不能改，后台以名字查询进行update
                 "&management_faculty=" +
                 this.temp.teacher_info.management_faculty +
@@ -523,7 +523,7 @@ export default {
     handleDelete(row, index) {
       axios
         .get(
-          "https://kujijiku.com/student/del_student?student_name=" +
+          "http://123.56.88.197/student/del_student?student_name=" +
             row.user_name
         )
         .then(response => {

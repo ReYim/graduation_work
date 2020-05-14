@@ -88,7 +88,7 @@ export default {
     clickConfirm() {
       if (this.password1 === this.password2) {
         axios
-          .post("https://kujijiku.com/user/reset_password", {
+          .post("http://123.56.88.197/user/reset_password", {
             // 放在 body 中的请求参数
             user_name: this.name,
             password: this.password2

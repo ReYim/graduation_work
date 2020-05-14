@@ -508,7 +508,7 @@ export default {
     getInfo() {
       axios
         .get(
-          "https://kujijiku.com/student/get_student_info?student_name=" +
+          "http://123.56.88.197/student/get_student_info?student_name=" +
             this.login_student_name
         )
         .then(response => {
@@ -605,7 +605,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           axios
-            .post("https://kujijiku.com/student/update_student_info", {
+            .post("http://123.56.88.197/student/update_student_info", {
               teacher_name: this.teacher_name,
               student_name: this.login_student_name,
               student_id: this.student_id,

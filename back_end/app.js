@@ -21,12 +21,12 @@ app.use(bodyParser.json())
  * host and port config
  */
 
-https.createServer({
-    key: fs.readFileSync('./3081777_kujijiku.com.key'),
-    cert: fs.readFileSync('./3081777_kujijiku.com.crt')
-  },app).listen(config.server_config.PORT, config.server_config.HOST, () => {
-   console.log("server started at: ", config.server_config.HOST + ":" + config.server_config.PORT)
-  })
+// https.createServer({
+//     key: fs.readFileSync('./3081777_kujijiku.com.key'),
+//     cert: fs.readFileSync('./3081777_kujijiku.com.crt')
+//   },app).listen(config.server_config.PORT, config.server_config.HOST, () => {
+//    console.log("server started at: ", config.server_config.HOST + ":" + config.server_config.PORT)
+//   })
 
 /**
  * 静态资源
