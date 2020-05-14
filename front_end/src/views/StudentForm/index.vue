@@ -293,7 +293,7 @@
           </template>
           <div>
             <div style="margin:10px 0px 10px 0;padding-top: 20px;;background:#f8f8f8">
-              <el-form-item label="家庭所在派出所及联系方式：" prop="family_police_station" label-width="300px">
+              <el-form-item label="备注信息：" prop="family_police_station" label-width="300px">
                 <el-input
                   v-model="ruleForm.family_police_station"
                   type="textarea"
@@ -301,7 +301,7 @@
                   style="width:430px"
                 ></el-input>
               </el-form-item>
-              <el-form-item
+              <!-- <el-form-item
                 label="家庭所在社区及联系方式："
                 prop="family_community_station"
                 label-width="300px"
@@ -312,16 +312,16 @@
                   :rows="4"
                   style="width:430px"
                 ></el-input>
-              </el-form-item>
-              <el-form-item label="所持有出入境证件类型（若无，填写无）：" prop="passport_type" label-width="300px">
+              </el-form-item> -->
+              <!-- <el-form-item label="所持有出入境证件类型（若无，填写无）：" prop="passport_type" label-width="300px">
                 <el-input
                   v-model="ruleForm.passport_type"
                   type="textarea"
                   :rows="4"
                   style="width:430px"
                 ></el-input>
-              </el-form-item>
-              <div style="display:flex;flex-direction: column;">
+              </el-form-item> -->
+              <!-- <div style="display:flex;flex-direction: column;">
                 <el-form-item
                   label="出入境证件是否上交学校："
                   prop="password_turn_in_school"
@@ -362,7 +362,7 @@
                     style="width:430px"
                   ></el-input>
                 </el-form-item>
-              </div>
+              </div> -->
             </div>
           </div>
         </el-collapse-item>
@@ -508,7 +508,7 @@ export default {
     getInfo() {
       axios
         .get(
-          "http://kujijiku.com:9528/student/get_student_info?student_name=" +
+          "https://kujijiku.com/student/get_student_info?student_name=" +
             this.login_student_name
         )
         .then(response => {
@@ -605,11 +605,11 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           axios
-            .post("http://kujijiku.com:9528/student/update_student_info", {
+            .post("https://kujijiku.com/student/update_student_info", {
               teacher_name: this.teacher_name,
               student_name: this.login_student_name,
               student_id: this.student_id,
-              student_faculty: this.ruleForm.student_faculty,
+              faculty: this.ruleForm.faculty,
               major: this.ruleForm.major,
               dormitory_address: this.ruleForm.dormitory_address,
               gender: this.ruleForm.gender,
@@ -660,12 +660,12 @@ export default {
               employment_status: this.ruleForm.employment_status,
               extended_record: this.ruleForm.extended_record,
               school_performance: this.ruleForm.school_performance,
+
               family_police_station: this.ruleForm.family_police_station,
-              family_community_station: this.ruleForm.family_community_station,
-              passport_type: this.ruleForm.passport_type,
-              password_turn_in_school: this.ruleForm.password_turn_in_school,
-              password_not_turn_in_school: this.ruleForm
-                .password_not_turn_in_school
+              family_community_station: '暂无',
+              passport_type: '暂无',
+              password_turn_in_school: '暂无',
+              password_not_turn_in_school: '暂无'
             })
             .then(response => {
               // 请求成功的处理
@@ -673,6 +673,7 @@ export default {
                 this.$message({ type: "success", message: "提交成功" });
                 setTimeout(() => {
                   this.getInfo();
+                  this.$router.push({path: '/dashboard'})
                 }, 1000);
               } else {
                 this.$message({

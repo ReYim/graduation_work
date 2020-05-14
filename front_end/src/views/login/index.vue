@@ -121,7 +121,7 @@ export default {
     handleLogin() {
       console.log(this.loginForm.username);
       console.log(this.loginForm.password);
-      axios.get("http://kujijiku.com:9528/user/count_visitors").then(response => {
+      axios.get("https://kujijiku.com/user/count_visitors").then(response => {
         if(response.data.code === 200) {
           console.log(response.data);
         } else {

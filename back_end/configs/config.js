@@ -1,7 +1,7 @@
 // node 服务器配置
 var server_config = {
     HOST: '0.0.0.0',
-    PORT: 9528
+    PORT: 443
 }
 
 // mysql 配置
@@ -9,7 +9,7 @@ var mysql_config = {
     DB_HOST: 'kujijiku.com',
     DB_NAME: 'reyim',
     DB_USER: 'reyim',
-    DB_PASSWORD: '123456',
+    DB_PASSWORD: 'KjZhwcxbt8t5RaLH',
     DB_PORT: '3306'
 }
 

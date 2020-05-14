@@ -5,6 +5,9 @@ const userRouter = require('./routers/index')
 const teacherListRouter = require('./routers/teacher')
 const studentListRouter = require('./routers/student')
 
+const https = require('https')
+const fs = require('fs')
+
 const access_cross_controller = require('./controller/access_cross')
 const count_visitors_controller = require('./controller/count_visitors')
 
@@ -13,6 +16,17 @@ const app = express()
 // create application/x-www-form-urlencoded parser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+/**
+ * host and port config
+ */
+
+https.createServer({
+    key: fs.readFileSync('./3081777_kujijiku.com.key'),
+    cert: fs.readFileSync('./3081777_kujijiku.com.crt')
+  },app).listen(config.server_config.PORT, config.server_config.HOST, () => {
+   console.log("server started at: ", config.server_config.HOST + ":" + config.server_config.PORT)
+  })
 
 /**
  * 静态资源

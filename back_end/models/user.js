@@ -16,11 +16,6 @@ const UserModel = ConnectMySQL.define('user', {
 		defaultValue: 1,  // 1可用 0限制使用
 		allowNull: false
 	},
-	count_visitors: {
-		type: Sequelize.INTEGER,
-		defaultValue: 1000,  // 1可用 0限制使用
-		allowNull: false		
-	},
 	user_role: {
 		type: Sequelize.STRING,
 		allowNull: false,

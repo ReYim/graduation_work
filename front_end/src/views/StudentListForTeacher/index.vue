@@ -323,10 +323,10 @@
             <el-tab-pane label="其它信息">
               <el-card class="box-card">
                 <div class="text item">
-                  <span class="label">家庭所在派出所及联系方式：</span>
+                  <span class="label">备注信息：</span>
                   {{student_infos.student_info.family_police_station}}
                 </div>
-                <div class="text item">
+                <!-- <div class="text item">
                   <span class="label">家庭所在社区及联系方式：</span>
                   {{student_infos.student_info.family_community_station}}
                 </div>
@@ -341,13 +341,14 @@
                 <div class="text item">
                   <span class="label">未上交原因：</span>
                   {{student_infos.student_info.password_not_turn_in_school}}
-                </div>                                               
+                </div>                                                -->
               </el-card>               
             </el-tab-pane>
           </el-tabs>
         </div>
         <div class="btn-layer">
           <div style="float:right;padding:12px 25px 12px">
+          <el-button size="mini" style="width:86px;height:36px;" type="primary" icon="el-icon-download" @click="studentDownload">导出</el-button>
             <el-button size="mini" style="width:86px;height:36px;" @click="drawer = false">关闭</el-button>
           </div>
         </div>
@@ -409,7 +410,7 @@ export default {
       this.listLoading = false;
       axios
         .get(
-          "http://kujijiku.com:9528/student/get_student?teacher_id=" +
+          "https://kujijiku.com/student/get_student?teacher_id=" +
             this.create_teacher_name
         )
         .then(response => {
@@ -451,7 +452,7 @@ export default {
           console.log(valid);
           console.log("添加", this.temp);
           axios
-            .post("http://kujijiku.com:9528/student/add_student", {
+            .post("https://kujijiku.com/student/add_student", {
               // 放在 body 中的请求参数
               student_name: this.temp.student_name,
               student_id: this.temp.student_info.student_id,
@@ -497,7 +498,7 @@ export default {
           console.log("编辑", this.temp);
           axios
             .get(
-              "http://kujijiku.com:9528/teacher/update_teacher?user_name=" +
+              "https://kujijiku.com/teacher/update_teacher?user_name=" +
               this.temp.user_name + // 名字不能改，后台以名字查询进行update
                 "&management_faculty=" +
                 this.temp.teacher_info.management_faculty +
@@ -522,7 +523,7 @@ export default {
     handleDelete(row, index) {
       axios
         .get(
-          "http://kujijiku.com:9528/student/del_student?student_name=" +
+          "https://kujijiku.com/student/del_student?student_name=" +
             row.user_name
         )
         .then(response => {
@@ -552,7 +553,7 @@ export default {
       console.log(this.student_infos);
     },
     handleDownload() {
-      var values = ["姓名", "学号", "学院", "分管老师", "宿舍地址", "获奖经历"];
+      var values = ["姓名", "学号", "学院", "分管老师"];
       var datas = this.student_list;
       let str = "";
       for (let i = 0; i < values.length; i++) {
@@ -569,10 +570,6 @@ export default {
           datas[j].student_info.faculty +
           "," +
           datas[j].student_info.charger_teacher_id +
-          "," +
-          datas[j].student_info.home_address +
-          "," +
-          datas[j].student_info.student_awards +
           "\n";
       }
       // encodeURIComponent解决中文乱码
@@ -586,6 +583,57 @@ export default {
       link.click();
       document.body.removeChild(link);
     },
+    studentDownload() {
+      var values = ["姓名", "学号", "学院", "分管老师", "专业", "宿舍地址", "性别", "民族", "身份证", "手机号", "生源地", "生源类别", "是否参军"];
+      var datas = this.student_infos;
+      console.log(datas);
+      
+      let str = "";
+      for (let i = 0; i < values.length; i++) {
+        str += values[i] + ",";
+      }
+      str += "\n";
+      // for (let j = 0; j < datas.length; j++) {
+        // todo 内容中的英文分隔符也被分割成了单独一个
+        str +=
+          datas.user_name +
+          "," +
+          datas.student_info.student_id +
+          "," +
+          datas.student_info.faculty +
+          "," +
+          datas.student_info.charger_teacher_id +
+          "," +
+          datas.student_info.major +
+          "," +
+          datas.student_info.dormitory_address +
+          "," +
+          datas.student_info.gender +
+          "," +
+          datas.student_info.nation +
+          "," +
+          datas.student_info.id_number +
+          "," +
+          datas.student_info.phone_number +
+          "," +
+          datas.student_info.residence_address +  
+          "," +
+          datas.student_info.source_category +
+          "," +
+          datas.student_info.join_army +                                                                    
+          "\n";
+      // }
+      // encodeURIComponent解决中文乱码
+      let uri = "data:text/csv;charset=utf-8,\ufeff" + encodeURIComponent(str);
+      // 通过创建a标签实现
+      let link = document.createElement("a");
+      link.href = uri;
+      // 对下载的文件命名
+      link.download = "学生" + datas.user_name + "的基本信息" + ".xlsx";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },    
     clearSearch() {
       this.handleFilter();
     },

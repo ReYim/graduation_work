@@ -2,6 +2,8 @@ const teacher_info = require('../../models/teacher')
 const user_module = require('../../models/user')
 const utils_common = require('../../utils/common')
 
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 /**
  * 获取管理老师信息 => 全部获取无传参
  */
@@ -19,7 +21,7 @@ let get_teacher = async function (request, response) {
         let teacher_list = await user_module.UserModel.findAll({
             attributes: ['user_name', 'user_role', 'user_status', 'createdAt'],
             where: {
-                user_role: 'teacher'
+                    [Op.or]: [{user_role: 'teacher'}, {user_role: '0'}]
             },
             include: [{
                 model: teacher_info.TeacheInfo,

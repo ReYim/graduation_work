@@ -42,10 +42,6 @@ let login = async function (request, response) {
             )
             if (!user) {
                 utils_common.sendMessage(response, 60204, '用户名或密码错误')
-                // response.json({
-                //     message: '用户不存在',
-                //     code: 60204
-                // })
                 return
             } else {
                 user_data.user_status = user.dataValues.user_status
@@ -299,7 +295,7 @@ let count_visitors = async function (request, response) {
             },
         })
 
-        let first_grade = await student_info.StudentInfo.findAndCountAll({
+        let fourth_grade = await student_info.StudentInfo.findAndCountAll({
             attributes: ['student_id'],
             where: {
                 student_id: {
@@ -309,7 +305,7 @@ let count_visitors = async function (request, response) {
             },
         })  
         
-        let second_grade = await student_info.StudentInfo.findAndCountAll({
+        let third_grade = await student_info.StudentInfo.findAndCountAll({
             attributes: ['student_id'],
             where: {
                 student_id: {
@@ -319,7 +315,7 @@ let count_visitors = async function (request, response) {
             },
         }) 
         
-        let third_grade = await student_info.StudentInfo.findAndCountAll({
+        let second_grade = await student_info.StudentInfo.findAndCountAll({
             attributes: ['student_id'],
             where: {
                 student_id: {
@@ -329,7 +325,7 @@ let count_visitors = async function (request, response) {
             },
         }) 
         
-        let fourth_grade = await student_info.StudentInfo.findAndCountAll({
+        let first_grade = await student_info.StudentInfo.findAndCountAll({
             attributes: ['student_id'],
             where: {
                 student_id: {
