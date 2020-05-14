@@ -1,7 +1,7 @@
 // node 服务器配置
 var server_config = {
     HOST: '0.0.0.0',
-    PORT: 80
+    PORT: 8081
 }
 
 // mysql 配置
