@@ -121,11 +121,22 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'https://reyim.github.io/',
+        path: 'http://123.56.88.197:8080/reyimu',
         meta: { title: '联系作者', icon: 'wechat' }
       }
     ]
-  },  
+  }, 
+  {
+    path: '/leave_message',
+    component: Layout,
+    children: [
+      {
+        path: 'message',
+        component: () => import('@/views/LeaveMessage/index'),
+        meta: { title: '留言给我', icon: 'edit' }
+      }
+    ]
+  },    
   // 404 page must be placed at the end !!!
   // { path: '*', redirect: '/404', hidden: true }
 ]

@@ -55,7 +55,7 @@ export default {
         this.third_grade,
         this.fourth_grade
       );
-      console.log("echarts_data：", this.grade_list);
+      // console.log("echarts_data：", this.grade_list);
       this.initChart();
     },1000);
   },

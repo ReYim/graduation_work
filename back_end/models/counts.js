@@ -7,6 +7,10 @@ const VisitorCount = ConnectMySQL.define('visitor', {
 		defaultValue: 1000,
 		allowNull: false		
 	},
+	leave_message: {
+		type: Sequelize.STRING,
+		allowNull: false		
+	},	
 });
 
 // // 默认访问量

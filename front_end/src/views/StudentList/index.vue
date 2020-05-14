@@ -438,8 +438,8 @@ export default {
     createData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          console.log(valid);
-          console.log("添加", this.temp);
+          // console.log(valid);
+          // console.log("添加", this.temp);
           axios
             .post("http://123.56.88.197:8081/student/add_student", {
               // 放在 body 中的请求参数
@@ -450,7 +450,7 @@ export default {
             })
             .then(response => {
               // 请求成功的处理
-              console.log(response.data);
+              // console.log(response.data);
               if (response.data.code === 200) {
                 this.dialogFormVisible = false;
                 this.$message({
@@ -472,11 +472,11 @@ export default {
       });
     },
     handleDetail(row) {
-      console.log(row);
+      // console.log(row);
       this.student_infos = row;
       this.drawer = true;
       this.tableData1 = this.student_infos;
-      console.log(this.tableData1);
+      // console.log(this.tableData1);
     },
     handleDelete(row, index) {
       axios
@@ -543,7 +543,7 @@ export default {
     studentDownload() {
       var values = ["姓名", "学号", "学院", "分管老师", "专业", "宿舍地址", "性别", "民族", "身份证", "手机号", "生源地", "生源类别", "是否参军"];
       var datas = this.student_infos;
-      console.log(datas);
+      // console.log(datas);
       
       let str = "";
       for (let i = 0; i < values.length; i++) {

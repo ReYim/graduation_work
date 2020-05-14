@@ -435,10 +435,38 @@ let count_visitors = async function (request, response) {
     }
 }
 
+let leave_message = async function (request, response) {
+    try {
+
+        let message_content = request.body.message_content;
+        console.log(message_content);
+
+        if (!message_content) {
+            utils_common.sendMessage(response, 1016, '参数传入有误')
+            return
+        }
+
+        let insert_message = await visitor_count.VisitorCount.create({
+            leave_message: message_content
+        })
+
+        response.json({
+            code: 200,
+            message: '留言成功'
+        })
+        
+        
+    } catch (error) {
+        utils_common.sendMessage(response, 1015, '留言接口捕获错误' + error)
+        return        
+    }
+}
+
 module.exports = {
     login,
     logout,
     userInfo,
     reset_password,
-    count_visitors
+    count_visitors,
+    leave_message
 }

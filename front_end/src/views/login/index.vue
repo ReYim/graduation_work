@@ -9,7 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">民族学生信息管理系统</h3>
+        <h3 class="title">深圳大学民族学生信息管理系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -120,13 +120,13 @@ export default {
       });
     },
     handleLogin() {
-      console.log(this.loginForm.username);
-      console.log(this.loginForm.password);
+      // console.log(this.loginForm.username);
+      // console.log(this.loginForm.password);
       axios.get("http://123.56.88.197:8081/user/count_visitors").then(response => {
         if(response.data.code === 200) {
-          console.log(response.data);
+          // console.log(response.data);
         } else {
-          console.log("访问量统计失败!");
+          // console.log("访问量统计失败!");
           
         }       
       })
@@ -143,7 +143,7 @@ export default {
               this.loading = false;
             });
         } else {
-          console.log("error submit!!");
+          // console.log("error submit!!");
           return false;
         }
       });

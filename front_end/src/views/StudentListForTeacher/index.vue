@@ -449,8 +449,8 @@ export default {
     createData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          console.log(valid);
-          console.log("添加", this.temp);
+          // console.log(valid);
+          // console.log("添加", this.temp);
           axios
             .post("http://123.56.88.197:8081/student/add_student", {
               // 放在 body 中的请求参数
@@ -460,7 +460,7 @@ export default {
             })
             .then(response => {
               // 请求成功的处理
-              console.log(response.data);
+              // console.log(response.data);
               if (response.data.code === 200) {
                 this.dialogFormVisible = false;
                 this.$message({
@@ -483,7 +483,7 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row); // copy obj
-      console.log(this.temp);
+      // console.log(this.temp);
 
       this.dialogStatus = "update";
       this.dialogFormVisible = true;
@@ -494,8 +494,8 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          console.log(valid);
-          console.log("编辑", this.temp);
+          // console.log(valid);
+          // console.log("编辑", this.temp);
           axios
             .get(
               "http://123.56.88.197:8081/teacher/update_teacher?user_name=" +
@@ -507,7 +507,7 @@ export default {
             )
             .then(response => {
               // 请求成功的处理
-              console.log(response.data);
+              // console.log(response.data);
               if (response.data.code === 200) {
                 this.dialogFormVisible = false;
                 this.getList();
@@ -547,10 +547,10 @@ export default {
         });
     },
     handleDetail(row) {
-      console.log(row);
+      // console.log(row);
       this.student_infos = row;
       this.drawer = true;
-      console.log(this.student_infos);
+      // console.log(this.student_infos);
     },
     handleDownload() {
       var values = ["姓名", "学号", "学院", "分管老师"];

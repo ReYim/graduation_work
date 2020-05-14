@@ -58,7 +58,7 @@ export default {
         // { value: 30, name: "管理学院" },
         // { value: 5, name: "经济学院" }
       );
-      console.log("echarts_data：", this.major_list);
+      // console.log("echarts_data：", this.major_list);
       this.initChart();
     }, 1000);
   },

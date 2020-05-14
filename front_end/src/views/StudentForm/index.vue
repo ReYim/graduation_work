@@ -514,7 +514,7 @@ export default {
         .then(response => {
           if (response.data.code === 200) {
             let data = response.data.data;
-            console.log(data.student_info);
+            // console.log(data.student_info);
             if (data.student_info.charger_teacher_id) {
               this.teacher_name = data.student_info.charger_teacher_id;
               this.student_id = data.student_info.student_id;
